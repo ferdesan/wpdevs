@@ -1,7 +1,7 @@
-## Dados de admin
-u: ferdesan
-p: 1854
-email: ferdesan@gmail.com
+## Dados do WP-Admin
+u:  
+p:  
+email:  
 
 ## Dados do MySQL 
 u:wordpress
@@ -26,16 +26,3 @@ Remover todas as imagens ao mesmo tempo
 Para remover todas as imagens, há um comando que faz isso: 
 - docker rmi $(docker images -q)
 
-
-…or create a new repository on the command line
-echo "# wpdevs" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M master
-git remote add origin https://github.com/ferdesan/wpdevs.git
-git push -u origin master
-…or push an existing repository from the command line
-git remote add origin https://github.com/ferdesan/wpdevs.git
-git branch -M master
-git push -u origin master
