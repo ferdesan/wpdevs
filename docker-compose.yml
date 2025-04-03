@@ -1,43 +1,46 @@
+#docker compose --env-file .env up -d
 #docker-compose up -d
 #docker-compose down #mantem os dados
 #docker-compose down --volumes #elimina os dados
-version: "3.8"
+#version: "3.8"
 
 services:
-  # Database
+  #Database
   db:
+    container_name: MySQL-WpDevs
     image: mysql:5.7
-    container_name: MySQL-Wp-Devs
     ports:
       - "3306:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: wordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
     restart: always
     volumes:
       - ./db_data:/var/lib/mysql
 
-  # SGBD
+  #SGBD
   phpmyadmin:
     depends_on:
       - db
+    container_name: phpMyAdmin-WpDevs
     image: phpmyadmin
-    container_name: phpMyAdmin-Wp-Devs
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     restart: always
     ports:
       - "8081:80"
 
-  # Aplicação
+  #Aplicação
   wordpress:
     depends_on:
       - db
+    container_name: WordPress-WpDevs
     image: wordpress:6.0.2-php8.0-apache
-    container_name: WordPress-Wp-Devs
     volumes:
       - ./:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -45,7 +48,7 @@ services:
     ports:
       - 8181:80
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}

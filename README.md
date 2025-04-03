@@ -10,6 +10,18 @@
 - p:wordpress
 - db:wordpress
 
+## Variaveis de ambiente .env
+
+- MYSQL_ROOT_PASSWORD:
+- MYSQL_DATABASE:
+- MYSQL_USER:
+- MYSQL_PASSWORD:
+- MYSQL_ROOT_PASSWORD:
+- WORDPRESS_DB_HOST: #db
+- WORDPRESS_DB_USER:
+- WORDPRESS_DB_PASSWORD:
+- WORDPRESS_DB_NAME:
+
 ## Comando para iniciar e parar um container
 
 - docker-compose up -d
