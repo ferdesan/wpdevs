@@ -23,6 +23,7 @@ add_action('wp_enqueue_scripts', 'wpdevs_load_scripts');
 
 function wpdevs_config()
 {
+    $textdomain = 'wp-devs';
     register_nav_menus(
         array(
             'wp_devs_main_menu' => 'Main Menu',

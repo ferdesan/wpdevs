@@ -7,6 +7,8 @@
 services:
   #Database
   db:
+    env_file:
+      - .env
     container_name: MySQL-WpDevs
     image: mysql:5.7
     ports:
@@ -17,7 +19,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+      MYSQL_ROOT_HOST: "%" #permite acesso remoto ao root
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes" #da acesso ao usuário root sem senha
     restart: always
     volumes:
       - ./db_data:/var/lib/mysql
@@ -26,6 +29,8 @@ services:
   phpmyadmin:
     depends_on:
       - db
+    env_file:
+      - .env
     container_name: phpMyAdmin-WpDevs
     image: phpmyadmin
     environment:
@@ -33,12 +38,14 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     restart: always
     ports:
-      - "8081:80"
+      - "8080:80"
 
   #Aplicação
   wordpress:
     depends_on:
       - db
+    env_file:
+      - .env
     container_name: WordPress-WpDevs
     image: wordpress:6.0.2-php8.0-apache
     volumes:
@@ -46,9 +53,9 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       # - ./wp-content:/var/www/html/wp-content
     ports:
-      - 8181:80
+      - "3000:80"
     environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
