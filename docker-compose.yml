@@ -55,6 +55,7 @@ services:
     ports:
       - "3000:80"
     environment:
+      VIRTUAL_HOST: wp.host.test
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
